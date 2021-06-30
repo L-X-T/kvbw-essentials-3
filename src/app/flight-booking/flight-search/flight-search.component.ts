@@ -8,10 +8,11 @@ import { CommonModule } from '@angular/common';
 import { FlightService } from './flight.service';
 import { CityPipe } from '../../shared/pipes/city.pipe';
 import { BehaviorSubject, Observable, Observer, share, Subject, Subscription, takeUntil } from 'rxjs';
+import { FlightCardComponent } from '../flight-card/flight-card.component';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, CityPipe],
+  imports: [CommonModule, FormsModule, CityPipe, FlightCardComponent],
   selector: 'app-flight-search',
   templateUrl: './flight-search.component.html',
   styleUrl: './flight-search.component.css',
@@ -33,13 +34,20 @@ export class FlightSearchComponent implements OnDestroy {
 
   protected message = '';
 
+  basket: { [id: number]: boolean } = {
+    3: true,
+    5: true,
+  };
+
   private readonly destroyRef = inject(DestroyRef);
   private readonly flightService = inject(FlightService);
 
   constructor() {
     effect(() => console.log(this.flightsLength() + ' flight(s) found.')); // similar to RxJS tap()
 
-    this.onSearch();
+    if (this.from && this.to) {
+      this.onSearch();
+    }
   }
 
   ngOnDestroy(): void {
