@@ -42,8 +42,8 @@
           @for (flight of flights; track flight.id) {
             <tr [class.active]="flight === selectedFlight">
               <td>{{ flight.id }}</td>
-              <td>{{ flight.from | asyncCity: 'short' | async }}</td>
-              <td>{{ flight.to | asyncCity: 'long' | async }}</td>
+              <td>{{ flight.from | city: 'short' }}</td>
+              <td>{{ flight.to | city: 'long' }}</td>
               <td>{{ flight.date | date: 'dd.MM.yyyy HH:mm' }}</td>
               <td>
                 <a (click)="onSelect(flight)">Edit</a>
@@ -54,6 +54,43 @@
       </table>
     </div>
   </div>
+}
+
+@if (flights$ | async; as asyncFlights) {
+  @if (asyncFlights.length > 0) {
+    <div class="card">
+      <div class="header">
+        <h2 class="title">Async flight(s)</h2>
+      </div>
+
+      <div class="content">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (flight of asyncFlights; track flight.id) {
+              <tr [class.active]="flight === selectedFlight">
+                <td>{{ flight.id }}</td>
+                <td>{{ flight.from | city: 'short' }}</td>
+                <td>{{ flight.to | city: 'long' }}</td>
+                <td>{{ flight.date | date: 'dd.MM.yyyy HH:mm' }}</td>
+                <td>
+                  <a (click)="onSelect(flight)">Edit</a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
 }
 
 @if (selectedFlight) {
