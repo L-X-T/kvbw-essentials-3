@@ -19,8 +19,8 @@ import { FlightStatusToggleComponent } from '../flight-status-toggle/flight-stat
   styleUrl: './flight-search.component.css',
 })
 export class FlightSearchComponent implements OnDestroy {
-  protected from = 'Hamburg';
-  protected to = 'Graz';
+  protected from = '';
+  protected to = '';
   protected flights: Flight[] = []; // old school
   protected flights$?: Observable<Flight[]>; // observable
   protected readonly flightsSubject = new BehaviorSubject<Flight[]>([]); // subject
@@ -76,7 +76,9 @@ export class FlightSearchComponent implements OnDestroy {
         this.flightsSignal.update((flights) => [...flights]);
       },
       error: (errResp: HttpErrorResponse) => console.error('Error loading flights', errResp),
-      complete: () => console.debug('Flights loading completed.'),
+      complete: () => {
+        // console.debug('Flights loading completed.');
+      },
     };
 
     // 3a. my subscription
