@@ -10,6 +10,7 @@ import { FlightValidationErrorsComponent } from '../flight-validation-errors/fli
 import { validateCity } from '../shared/validation/city-validator';
 import { validateAsyncCity } from '../shared/validation/async-city-validator';
 import { validateRoundTrip } from '../shared/validation/round-trip-validator';
+import { CITY_PATTERN } from '../../shared/global';
 
 @Component({
   standalone: true,
@@ -36,7 +37,7 @@ export class FlightEditComponent implements OnChanges {
             Validators.required,
             Validators.minLength(3),
             Validators.maxLength(15),
-            Validators.pattern(/^[a-zA-ZäöüÄÖÜß ]+$/),
+            Validators.pattern(CITY_PATTERN),
             validateCity(['Graz', 'Wien', 'Hamburg', 'Berlin']),
           ],
           updateOn: 'blur',
@@ -48,7 +49,7 @@ export class FlightEditComponent implements OnChanges {
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(15),
-          Validators.pattern(/^[a-zA-ZäöüÄÖÜß ]+$/),
+          Validators.pattern(CITY_PATTERN),
           validateCity(['Graz', 'Wien', 'Hamburg', 'Berlin']),
         ],
       ],
