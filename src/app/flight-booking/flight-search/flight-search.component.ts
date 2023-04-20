@@ -1,9 +1,9 @@
-import { Component, computed, DestroyRef, effect, inject, OnDestroy, signal } from '@angular/core';
+import { Component, computed, DestroyRef, effect, inject, OnDestroy, signal, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule, NgForm } from '@angular/forms';
 
 import { Flight } from '../../entities/flight';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FlightService } from './flight.service';
 import { CityPipe } from '../../shared/pipes/city.pipe';
@@ -27,6 +27,8 @@ import { FlightValidationErrorsComponent } from '../flight-validation-errors/fli
   styleUrl: './flight-search.component.css',
 })
 export class FlightSearchComponent implements OnDestroy {
+  @ViewChild('flightSearchForm') flightSearchForm?: NgForm;
+
   protected from = '';
   protected to = '';
   protected minLength = 3;
@@ -75,6 +77,10 @@ export class FlightSearchComponent implements OnDestroy {
   }
 
   protected onSearch(): void {
+    if (this.flightSearchForm?.invalid) {
+      this.flightSearchForm.form.markAllAsTouched();
+      return;
+    }
     // 1. my observable
     this.flights$ = this.flightService.find(this.from, this.to).pipe(share());
 

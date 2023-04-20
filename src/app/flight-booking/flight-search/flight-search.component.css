@@ -1,3 +1,7 @@
 .active td {
   background-color: orange !important;
 }
+
+input.ng-invalid.ng-touched {
+  border: 1px solid #bf032a;
+}

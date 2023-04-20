@@ -20,7 +20,11 @@
         />
       </div>
 
-      @if (flightSearchForm.controls['from'] && flightSearchForm.controls['from'].errors) {
+      @if (
+        flightSearchForm.controls['from'] &&
+        flightSearchForm.controls['from'].errors &&
+        flightSearchForm.controls['from'].touched
+      ) {
         <app-flight-validation-errors [errors]="flightSearchForm.controls['from'].errors" fieldLabel="From" />
       }
 
@@ -38,14 +42,16 @@
         />
       </div>
 
-      @if (flightSearchForm.controls['to'] && flightSearchForm.controls['to'].errors) {
+      @if (
+        flightSearchForm.controls['to'] &&
+        flightSearchForm.controls['to'].errors &&
+        flightSearchForm.controls['to'].touched
+      ) {
         <app-flight-validation-errors [errors]="flightSearchForm.controls['to'].errors" fieldLabel="To" />
       }
 
       <div class="form-group">
-        <button [disabled]="!to || !from || flightSearchForm.invalid" (click)="onSearch()" class="btn btn-default">
-          Search
-        </button>
+        <button (click)="onSearch()" class="btn btn-default">Search</button>
       </div>
     </form>
   </div>
