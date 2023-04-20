@@ -153,4 +153,19 @@ export class FlightSearchComponent implements OnDestroy {
 
     this.onSearch(); // to update the results
   }
+
+  delayFirstFlight(): void {
+    if (this.flights.length > 0) {
+      const ONE_MINUTE = 1000 * 60;
+      const firstFlight = this.flights[0];
+      const date = new Date(firstFlight.date);
+      const newDate = new Date(date.getTime() + 15 * ONE_MINUTE);
+
+      // mutable update
+      firstFlight.date = newDate.toISOString();
+
+      // immutable update
+      // this.flights[0] = { ...firstFlight, date: newDate.toISOString() };
+    }
+  }
 }
