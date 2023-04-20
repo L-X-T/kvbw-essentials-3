@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { AirportNameFormat } from '../entities/airport-name-format';
+import { AirportNameFormat } from '../../entities/airport-name-format';
 
 @Injectable({
   providedIn: 'root',

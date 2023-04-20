@@ -1,7 +1,7 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AirportService } from '../../airports/airport.service';
+import { AirportService } from '../../components/airports/airport.service';
 import { AirportNameFormat } from '../../entities/airport-name-format';
 
 @Pipe({
