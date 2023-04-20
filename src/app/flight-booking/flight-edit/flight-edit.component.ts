@@ -2,7 +2,7 @@ import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, Output }
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { Flight } from '../../entities/flight';
@@ -78,10 +78,7 @@ export class FlightEditComponent implements OnChanges {
       console.log(value);
     });
 
-  private readonly paramsSubscription = this.route.params.subscribe((params) => {
-    this.id = params['id'];
-    this.showDetails = params['showDetails'];
-  });
+  private readonly paramsSubscription = this.route.params.subscribe((params) => this.onRouteParams(params));
 
   ngOnChanges(): void {
     if (this.flight) {
@@ -100,15 +97,42 @@ export class FlightEditComponent implements OnChanges {
           }
 
           this.flightChange.emit(flight);
-
-          this.message = 'Success!';
+          this.flight = flight;
+          this.message = 'Success saving!';
+          this.patchFormValue();
         },
         error: (err: HttpErrorResponse) => {
           if (this.debug) {
             console.error('Error', err);
           }
 
-          this.message = 'Error!';
+          this.message = 'Error saving!';
+        },
+      });
+  }
+
+  private patchFormValue(): void {
+    if (this.editForm && this.flight) {
+      this.editForm.patchValue(this.flight);
+    }
+  }
+
+  private onRouteParams(params: Params) {
+    this.id = params['id'];
+    this.showDetails = params['showDetails'];
+
+    this.flightService
+      .findById(this.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (flight) => {
+          this.flight = flight;
+          this.message = 'Success loading!';
+          this.patchFormValue();
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error('Error', err);
+          this.message = 'Error Loading!';
         },
       });
   }

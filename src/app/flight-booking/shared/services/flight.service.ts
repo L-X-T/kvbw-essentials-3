@@ -19,6 +19,11 @@ export class FlightService {
     return this.http.get<Flight[]>(this.url, { headers: this.headers, params });
   }
 
+  findById(id: string): Observable<Flight> {
+    const params = new HttpParams().set('id', id);
+    return this.http.get<Flight>(this.url, { headers: this.headers, params });
+  }
+
   save(flight: Flight): Observable<Flight> {
     return this.http.post<Flight>(this.url, flight, { headers: this.headers });
   }
