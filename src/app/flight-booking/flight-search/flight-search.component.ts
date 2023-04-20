@@ -11,6 +11,7 @@ import { BehaviorSubject, Observable, Observer, share, Subject, Subscription, ta
 import { FlightCardComponent } from '../flight-card/flight-card.component';
 import { FlightStatusToggleComponent } from '../flight-status-toggle/flight-status-toggle.component';
 import { FlightValidationErrorsComponent } from '../flight-validation-errors/flight-validation-errors.component';
+import { CityValidatorDirective } from '../shared/validation/city-validator.directive';
 
 @Component({
   standalone: true,
@@ -21,6 +22,7 @@ import { FlightValidationErrorsComponent } from '../flight-validation-errors/fli
     FlightCardComponent,
     FlightStatusToggleComponent,
     FlightValidationErrorsComponent,
+    CityValidatorDirective,
   ],
   selector: 'app-flight-search',
   templateUrl: './flight-search.component.html',
@@ -29,8 +31,8 @@ import { FlightValidationErrorsComponent } from '../flight-validation-errors/fli
 export class FlightSearchComponent implements OnDestroy {
   @ViewChild('flightSearchForm') flightSearchForm?: NgForm;
 
-  protected from = '';
-  protected to = '';
+  protected from = 'Hamburg';
+  protected to = 'Graz';
   protected minLength = 3;
   protected maxLength = 15;
 

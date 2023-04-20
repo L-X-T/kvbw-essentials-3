@@ -15,3 +15,10 @@
 @if (errors()['pattern']) {
   <div class="text-danger">{{ fieldLabel() }} has invalid input.</div>
 }
+@if (errors()['city']) {
+  <div class="text-danger">
+    {{ fieldLabel() }} is "{{ errors()['city'].actualCity }}" but should be a city of "{{
+      errors()['city'].validCities
+    }}".
+  </div>
+}
