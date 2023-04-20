@@ -109,11 +109,13 @@
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <!--<app-flight-card [item]="flight" [selected]="basket[flight.id]" (selectedChange)="basket[flight.id] = $event" />-->
         <app-flight-card [item]="flight" [selected]="basket[flight.id]">
-          <button class="btn btn-default" (click)="basket[flight.id] = !basket[flight.id]">
+          <button class="btn btn-default" style="margin-right: 10px" (click)="basket[flight.id] = !basket[flight.id]">
             {{ basket[flight.id] ? 'Deselect' : 'Select' }}
           </button>
 
-          <app-flight-status-toggle style="margin-left: 10px" [(delayed)]="flight.delayed" />
+          <app-flight-status-toggle style="margin-right: 10px" [(delayed)]="flight.delayed" />
+
+          <button class="btn btn-default" (click)="flightToEdit = flight">Edit</button>
         </app-flight-card>
       </div>
     }
@@ -199,7 +201,7 @@
   </div>
 }
 
-@if (selectedFlight) {
+<!--@if (selectedFlight) {
   <div class="card">
     <div class="header">
       <h2 class="title">Flight edit</h2>
@@ -233,6 +235,18 @@
           {{ message }}
         </div>
       }
+    </div>
+  </div>
+}-->
+
+@if (flightToEdit) {
+  <div class="card">
+    <div class="header">
+      <h2 class="title">Flight edit</h2>
+    </div>
+
+    <div class="content">
+      <app-flight-edit [flight]="flightToEdit" />
     </div>
   </div>
 }
