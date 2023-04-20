@@ -39,6 +39,10 @@
     <app-flight-validation-errors [errors]="editForm.controls['date'].errors" fieldLabel="Date" />
   }
 
+  @if (editForm.errors && editForm.dirty) {
+    <app-flight-validation-errors [errors]="editForm.errors" fieldLabel="Form" />
+  }
+
   <div class="form-group">
     <button [disabled]="editForm.pending" (click)="onSave()" class="btn btn-default">Save</button>
   </div>

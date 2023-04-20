@@ -9,6 +9,7 @@ import { FlightService } from '../shared/services/flight.service';
 import { FlightValidationErrorsComponent } from '../flight-validation-errors/flight-validation-errors.component';
 import { validateCity } from '../shared/validation/city-validator';
 import { validateAsyncCity } from '../shared/validation/async-city-validator';
+import { validateRoundTrip } from '../shared/validation/round-trip-validator';
 
 @Component({
   standalone: true,
@@ -23,34 +24,39 @@ export class FlightEditComponent implements OnChanges {
   private readonly destroyRef = inject(DestroyRef);
   private readonly flightService = inject(FlightService);
 
-  editForm: FormGroup = inject(FormBuilder).group({
-    id: [0, [Validators.required, Validators.min(0), Validators.pattern(/^[0-9]+$/)]],
-    from: [
-      '',
-      {
-        asyncValidators: [validateAsyncCity(this.flightService)],
-        validators: [
+  editForm: FormGroup = inject(FormBuilder).group(
+    {
+      id: [0, [Validators.required, Validators.min(0), Validators.pattern(/^[0-9]+$/)]],
+      from: [
+        '',
+        {
+          asyncValidators: [validateAsyncCity(this.flightService)],
+          validators: [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(15),
+            Validators.pattern(/^[a-zA-ZäöüÄÖÜß ]+$/),
+            validateCity(['Graz', 'Wien', 'Hamburg', 'Berlin']),
+          ],
+          updateOn: 'blur',
+        },
+      ],
+      to: [
+        '',
+        [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(15),
           Validators.pattern(/^[a-zA-ZäöüÄÖÜß ]+$/),
           validateCity(['Graz', 'Wien', 'Hamburg', 'Berlin']),
         ],
-        updateOn: 'blur',
-      },
-    ],
-    to: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(15),
-        Validators.pattern(/^[a-zA-ZäöüÄÖÜß ]+$/),
-        validateCity(['Graz', 'Wien', 'Hamburg', 'Berlin']),
       ],
-    ],
-    date: ['', [Validators.required, Validators.minLength(33), Validators.maxLength(33)]],
-  });
+      date: ['', [Validators.required, Validators.minLength(33), Validators.maxLength(33)]],
+    },
+    {
+      validators: validateRoundTrip,
+    },
+  );
 
   message = '';
 
