@@ -1,0 +1,17 @@
+<div class="text-danger">{{ fieldLabel() }} is invalid:</div>
+<div class="text-info">{{ errors() | json }}</div>
+@if (errors()['required']) {
+  <div class="text-danger">{{ fieldLabel() }} is required.</div>
+}
+@if (errors()['minlength']) {
+  <div class="text-danger">
+    From minlength is {{ errors()['minlength'].requiredLength }} but actual length is
+    {{ errors()['minlength'].actualLength }}.
+  </div>
+}
+@if (errors()['maxlength']) {
+  <div class="text-danger">{{ fieldLabel() }} maxlength is {{ errors()['maxlength'].requiredLength }}.</div>
+}
+@if (errors()['pattern']) {
+  <div class="text-danger">{{ fieldLabel() }} has invalid input.</div>
+}
