@@ -17,9 +17,13 @@
           [minlength]="minLength"
           [maxlength]="maxLength"
           pattern="[a-zA-ZäöüÄÖÜß ]+"
-          [city]="['Graz', 'Salzburg', 'Hamburg', 'München']"
+          asyncCity
         />
       </div>
+
+      @if (flightSearchForm.controls['from'] && flightSearchForm.controls['from'].pending) {
+        <div class="text-warning">... Executing Async Validator(s) ...</div>
+      }
 
       @if (
         flightSearchForm.controls['from'] &&
@@ -40,7 +44,6 @@
           [minlength]="minLength"
           [maxlength]="maxLength"
           pattern="[a-zA-ZäöüÄÖÜß ]+"
-          [city]="['Graz', 'Salzburg', 'Hamburg', 'München']"
         />
       </div>
 

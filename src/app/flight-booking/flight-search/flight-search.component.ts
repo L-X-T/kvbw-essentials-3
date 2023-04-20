@@ -5,13 +5,14 @@ import { FormsModule, NgForm } from '@angular/forms';
 
 import { Flight } from '../../entities/flight';
 import { CommonModule } from '@angular/common';
-import { FlightService } from './flight.service';
+import { FlightService } from '../shared/services/flight.service';
 import { CityPipe } from '../../shared/pipes/city.pipe';
 import { BehaviorSubject, Observable, Observer, share, Subject, Subscription, takeUntil } from 'rxjs';
 import { FlightCardComponent } from '../flight-card/flight-card.component';
 import { FlightStatusToggleComponent } from '../flight-status-toggle/flight-status-toggle.component';
 import { FlightValidationErrorsComponent } from '../flight-validation-errors/flight-validation-errors.component';
 import { CityValidatorDirective } from '../shared/validation/city-validator.directive';
+import { AsyncCityValidatorDirective } from '../shared/validation/async-city-validator.directive';
 
 @Component({
   standalone: true,
@@ -23,6 +24,7 @@ import { CityValidatorDirective } from '../shared/validation/city-validator.dire
     FlightStatusToggleComponent,
     FlightValidationErrorsComponent,
     CityValidatorDirective,
+    AsyncCityValidatorDirective,
   ],
   selector: 'app-flight-search',
   templateUrl: './flight-search.component.html',
