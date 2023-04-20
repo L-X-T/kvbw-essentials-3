@@ -8,6 +8,7 @@ import { Flight } from '../../entities/flight';
 import { FlightService } from '../shared/services/flight.service';
 import { FlightValidationErrorsComponent } from '../flight-validation-errors/flight-validation-errors.component';
 import { validateCity } from '../shared/validation/city-validator';
+import { validateAsyncCity } from '../shared/validation/async-city-validator';
 
 @Component({
   standalone: true,
@@ -27,6 +28,7 @@ export class FlightEditComponent implements OnChanges {
     from: [
       '',
       {
+        asyncValidators: [validateAsyncCity(this.flightService)],
         validators: [
           Validators.required,
           Validators.minLength(3),
