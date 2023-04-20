@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { Flight } from '../../entities/flight';
 import { FlightService } from '../shared/services/flight.service';
 import { FlightValidationErrorsComponent } from '../flight-validation-errors/flight-validation-errors.component';
+import { validateCity } from '../shared/validation/city-validator';
 
 @Component({
   standalone: true,
@@ -31,6 +32,7 @@ export class FlightEditComponent implements OnChanges {
           Validators.minLength(3),
           Validators.maxLength(15),
           Validators.pattern(/^[a-zA-ZäöüÄÖÜß ]+$/),
+          validateCity,
         ],
         updateOn: 'blur',
       },
@@ -42,6 +44,7 @@ export class FlightEditComponent implements OnChanges {
         Validators.minLength(3),
         Validators.maxLength(15),
         Validators.pattern(/^[a-zA-ZäöüÄÖÜß ]+$/),
+        validateCity,
       ],
     ],
     date: ['', [Validators.required, Validators.minLength(33), Validators.maxLength(33)]],
