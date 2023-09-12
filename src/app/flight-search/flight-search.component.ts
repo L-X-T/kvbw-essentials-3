@@ -1,5 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { Flight } from '../entities/flight';
 import { FormsModule } from '@angular/forms';
@@ -28,10 +29,12 @@ export class FlightSearchComponent implements OnDestroy {
 
   protected message = '';
 
-  constructor(private readonly flightService: FlightService) {
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly flightService = inject(FlightService);
+
+  constructor() {
     this.onSearch();
   }
-  // private readonly flightService = inject(FlightService);
 
   ngOnDestroy(): void {
     // 4a. my unsubscribe
@@ -59,6 +62,9 @@ export class FlightSearchComponent implements OnDestroy {
 
     // 3b. takeUntil terminator$ emits
     this.flights$.pipe(takeUntil(this.terminator$)).subscribe(flightsObserver);
+
+    // 3c. takeUntilDestroyed
+    this.flights$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(flightsObserver);
   }
 
   protected onSelect(selectedFlight: Flight): void {
@@ -67,17 +73,20 @@ export class FlightSearchComponent implements OnDestroy {
 
   protected onSave(): void {
     if (this.selectedFlight) {
-      this.flightService.save(this.selectedFlight).subscribe({
-        next: (flight) => {
-          console.log('Flight saved: ', flight);
-          this.selectedFlight = flight;
-          this.message = 'Success!';
-        },
-        error: (errResponse: HttpErrorResponse) => {
-          console.error('Error saving flight', errResponse);
-          this.message = 'Error: ' + errResponse.message;
-        },
-      });
+      this.flightService
+        .save(this.selectedFlight)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: (flight) => {
+            console.log('Flight saved: ', flight);
+            this.selectedFlight = flight;
+            this.message = 'Success!';
+          },
+          error: (errResponse: HttpErrorResponse) => {
+            console.error('Error saving flight', errResponse);
+            this.message = 'Error: ' + errResponse.message;
+          },
+        });
     }
   }
 }
