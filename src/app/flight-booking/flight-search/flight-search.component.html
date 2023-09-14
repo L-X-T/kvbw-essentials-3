@@ -109,7 +109,7 @@
 
 @if (flights.length > 0) {
   <div class="row">
-    @for (flight of flights; track flight.id) {
+    @for (flight of flights; track flight.id; let index = $index) {
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <!--<app-flight-card [item]="flight" [selected]="basket[flight.id]" (selectedChange)="basket[flight.id] = $event" />-->
         <app-flight-card [item]="flight" [selected]="basket[flight.id]">
@@ -117,7 +117,11 @@
             {{ basket[flight.id] ? 'Deselect' : 'Select' }}
           </button>
 
-          <app-flight-status-toggle style="margin-right: 10px" [(delayed)]="flight.delayed" />
+          <app-flight-status-toggle
+            style="margin-right: 10px"
+            [(delayed)]="flight.delayed"
+            (delayedChange)="updateFlightDelayedStatus(index, $event)"
+          />
 
           <a class="btn btn-default" [routerLink]="['/flight-booking/flight-edit', flight.id, { showDetails: true }]">
             Edit

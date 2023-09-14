@@ -162,10 +162,28 @@ export class FlightSearchComponent implements OnDestroy {
       const newDate = new Date(date.getTime() + 15 * ONE_MINUTE);
 
       // mutable update
-      firstFlight.date = newDate.toISOString();
+      // firstFlight.date = newDate.toISOString();
 
-      // immutable update
-      // this.flights[0] = { ...firstFlight, date: newDate.toISOString() };
+      // immutable update flight
+      const newFlight = { ...firstFlight, date: newDate.toISOString() };
+      this.flights[0] = newFlight;
+
+      // immutable update flights
+      // 1. update via map
+      // this.flights = this.flights.map((f) => (f.id === firstFlight.id ? newFlight : f));
+
+      // 2. recreate array
+      // this.flights = [newFlight, ...this.flights.slice(1)];
+
+      // 3. splice array
+      // this.flights.splice(0, 1, newFlight);
+
+      // 4. spreading
+      // this.flights = [...this.flights];
     }
+  }
+
+  updateFlightDelayedStatus(index: number, delayed: boolean) {
+    this.flights[index] = { ...this.flights[index], delayed };
   }
 }
