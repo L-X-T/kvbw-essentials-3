@@ -9,8 +9,8 @@
 
     <form [formGroup]="editForm">
       <div class="form-group">
-        <label>Id:</label>
-        <input formControlName="id" class="form-control" />
+        <label for="id">Id:</label>
+        <input formControlName="id" id="id" class="form-control" />
       </div>
 
       @if (editForm.controls['id'] && editForm.controls['id'].errors && editForm.controls['id'].touched) {
@@ -18,8 +18,8 @@
       }
 
       <div class="form-group">
-        <label>From:</label>
-        <input formControlName="from" class="form-control" />
+        <label for="from">From:</label>
+        <input formControlName="from" id="from" class="form-control" />
       </div>
 
       @if (editForm.controls['from'] && editForm.controls['from'].pending) {
@@ -31,8 +31,8 @@
       }
 
       <div class="form-group">
-        <label>To:</label>
-        <input formControlName="to" class="form-control" />
+        <label for="to">To:</label>
+        <input formControlName="to" id="to" class="form-control" />
       </div>
 
       @if (editForm.controls['to'] && editForm.controls['to'].errors && editForm.controls['to'].touched) {
@@ -40,8 +40,8 @@
       }
 
       <div class="form-group">
-        <label>Date:</label>
-        <input formControlName="date" class="form-control" />
+        <label for="date">Date:</label>
+        <input formControlName="date" id="date" class="form-control" />
       </div>
 
       @if (editForm.controls['date'] && editForm.controls['date'].errors && editForm.controls['date'].touched) {
