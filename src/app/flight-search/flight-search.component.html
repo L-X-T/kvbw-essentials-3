@@ -46,7 +46,7 @@
               <td>{{ flight.to }}</td>
               <td>{{ flight.date | date: 'dd.MM.yyyy HH:mm' }}</td>
               <td>
-                <a (click)="onSelect(flight)">Select</a>
+                <a (click)="onSelect(flight)">Edit</a>
               </td>
             </tr>
           }
@@ -59,11 +59,37 @@
 @if (selectedFlight) {
   <div class="card">
     <div class="header">
-      <h2 class="title">Selected flight</h2>
+      <h2 class="title">Flight edit</h2>
     </div>
 
     <div class="content">
-      <pre>{{ selectedFlight | json }}</pre>
+      <div class="form-group">
+        <label>Id</label>
+        <input [(ngModel)]="selectedFlight.id" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label>From</label>
+        <input [(ngModel)]="selectedFlight.from" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label>To</label>
+        <input [(ngModel)]="selectedFlight.to" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label>Date</label>
+        <input [(ngModel)]="selectedFlight.date" class="form-control" />
+      </div>
+
+      <button (click)="onSave()" class="btn btn-default">Save</button>
+
+      @if (message) {
+        <div>
+          {{ message }}
+        </div>
+      }
     </div>
   </div>
 }
