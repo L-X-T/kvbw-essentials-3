@@ -1,0 +1,69 @@
+<div class="card">
+  <div class="header">
+    <h1 class="title">Flight search</h1>
+  </div>
+
+  <div class="content">
+    <form>
+      <div class="form-group">
+        <label for="fsf_from">From (*)</label>
+        <input id="fsf_from" [(ngModel)]="from" name="from" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="fsf_to">To (*)</label>
+        <input id="fsf_to" [(ngModel)]="to" name="to" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <button [disabled]="!to || !from" (click)="onSearch()" class="btn btn-default">Search</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+@if (flights.length > 0) {
+  <div class="card">
+    <div class="header">
+      <h2 class="title">Found flight(s)</h2>
+    </div>
+
+    <div class="content">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (flight of flights; track flight.id) {
+            <tr [class.active]="flight === selectedFlight">
+              <td>{{ flight.id }}</td>
+              <td>{{ flight.from }}</td>
+              <td>{{ flight.to }}</td>
+              <td>{{ flight.date | date: 'dd.MM.yyyy HH:mm' }}</td>
+              <td>
+                <a (click)="onSelect(flight)">Select</a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+}
+
+@if (selectedFlight) {
+  <div class="card">
+    <div class="header">
+      <h2 class="title">Selected flight</h2>
+    </div>
+
+    <div class="content">
+      <pre>{{ selectedFlight | json }}</pre>
+    </div>
+  </div>
+}
