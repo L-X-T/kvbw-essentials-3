@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { Flight } from '../../entities/flight';
@@ -11,10 +11,10 @@ import { Flight } from '../../entities/flight';
   styleUrls: ['./flight-card.component.css'],
 })
 export class FlightCardComponent implements OnInit, OnChanges, OnDestroy {
-  debug = true;
+  debug = false;
 
-  @Input({ required: true }) item!: Flight;
-  @Input() selected = false;
+  item = input.required<Flight>();
+  selected = input(false);
 
   constructor() {
     this.debugInputs('constructor');
