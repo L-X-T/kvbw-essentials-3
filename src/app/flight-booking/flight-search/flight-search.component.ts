@@ -13,6 +13,7 @@ import { FlightStatusToggleComponent } from '../flight-status-toggle/flight-stat
 import { FlightValidationErrorsComponent } from '../flight-validation-errors/flight-validation-errors.component';
 import { CityValidatorDirective } from '../shared/validation/city-validator.directive';
 import { AsyncCityValidatorDirective } from '../shared/validation/async-city-validator.directive';
+import { RoundTripValidatorDirective } from '../shared/validation/round-trip-validator.directive';
 
 @Component({
   standalone: true,
@@ -25,6 +26,7 @@ import { AsyncCityValidatorDirective } from '../shared/validation/async-city-val
     FlightValidationErrorsComponent,
     CityValidatorDirective,
     AsyncCityValidatorDirective,
+    RoundTripValidatorDirective,
   ],
   selector: 'app-flight-search',
   templateUrl: './flight-search.component.html',

@@ -25,3 +25,6 @@
 @if (errors()['asyncCity']) {
   <div class="text-danger">No flight starting from "{{ errors()['asyncCity'] }}".</div>
 }
+@if (errors()['roundTrip']) {
+  <div class="text-danger">Round trips are not allowed.</div>
+}

@@ -4,7 +4,7 @@
   </div>
 
   <div class="content">
-    <form #flightSearchForm="ngForm">
+    <form #flightSearchForm="ngForm" roundTrip>
       <div class="form-group">
         <label for="fsf_from">From (*)</label>
         <input
@@ -53,6 +53,10 @@
         flightSearchForm.controls['to'].touched
       ) {
         <app-flight-validation-errors [errors]="flightSearchForm.controls['to'].errors" fieldLabel="To" />
+      }
+
+      @if (flightSearchForm.errors && flightSearchForm.dirty) {
+        <app-flight-validation-errors [errors]="flightSearchForm.errors" fieldLabel="Form" />
       }
 
       <div class="form-group">
