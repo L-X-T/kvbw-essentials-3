@@ -2,9 +2,9 @@ import { Directive, inject } from '@angular/core';
 import { AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, ValidationErrors } from '@angular/forms';
 
 import { Observable } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
 
 import { FlightService } from '../services/flight.service';
+import { validateAsyncCity } from './async-city-validator';
 
 @Directive({
   standalone: true,
@@ -20,10 +20,7 @@ import { FlightService } from '../services/flight.service';
 export class AsyncCityValidatorDirective implements AsyncValidator {
   private readonly flightService = inject(FlightService);
 
-  validate(c: AbstractControl): Observable<ValidationErrors | null> {
-    return this.flightService.find(c.value, '').pipe(
-      map((flights) => (flights.length > 0 ? null : { asyncCity: c.value })),
-      delay(2000), // <-- delay; can be removed later...
-    );
+  validate(c: AbstractControl): Observable<ValidationErrors | null> | Promise<ValidationErrors | null> {
+    return validateAsyncCity(this.flightService)(c);
   }
 }
