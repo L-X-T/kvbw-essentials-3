@@ -25,12 +25,15 @@ export class FlightEditComponent implements OnChanges {
     id: [0, [Validators.required, Validators.min(0), Validators.pattern(/^[0-9]+$/)]],
     from: [
       '',
-      [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(15),
-        Validators.pattern(/^[a-zA-ZäöüÄÖÜß ]+$/),
-      ],
+      {
+        validators: [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(15),
+          Validators.pattern(/^[a-zA-ZäöüÄÖÜß ]+$/),
+        ],
+        updateOn: 'blur',
+      },
     ],
     to: [
       '',
