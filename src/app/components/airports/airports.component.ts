@@ -12,3 +12,5 @@ import { AsyncPipe } from '@angular/common';
 export class AirportsComponent {
   readonly airports$ = inject(AirportService).findAll().pipe(delay(3_000));
 }
+
+export default AirportsComponent;

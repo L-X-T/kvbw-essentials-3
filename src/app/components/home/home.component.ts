@@ -9,3 +9,5 @@ import { Component } from '@angular/core';
 export class HomeComponent {
   title = 'Hello World!';
 }
+
+export default HomeComponent;
