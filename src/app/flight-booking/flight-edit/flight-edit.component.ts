@@ -2,6 +2,7 @@ import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, Output }
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { Flight } from '../../entities/flight';
@@ -23,8 +24,13 @@ export class FlightEditComponent implements OnChanges {
   @Input() flight?: Flight | null;
   @Output() flightChange = new EventEmitter<Flight>();
 
+  debug = true;
+  id = '';
+  showDetails = '';
+
   private readonly destroyRef = inject(DestroyRef);
   private readonly flightService = inject(FlightService);
+  private readonly route = inject(ActivatedRoute);
 
   editForm: FormGroup = inject(FormBuilder).group(
     {
@@ -72,6 +78,11 @@ export class FlightEditComponent implements OnChanges {
       console.log(value);
     });
 
+  private readonly paramsSubscription = this.route.params.subscribe((params) => {
+    this.id = params['id'];
+    this.showDetails = params['showDetails'];
+  });
+
   ngOnChanges(): void {
     if (this.flight) {
       this.editForm.patchValue(this.flight);
@@ -84,14 +95,19 @@ export class FlightEditComponent implements OnChanges {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (flight) => {
-          console.log('saved flight:', flight);
+          if (this.debug) {
+            console.log('saved flight:', flight);
+          }
 
           this.flightChange.emit(flight);
 
           this.message = 'Success!';
         },
         error: (err: HttpErrorResponse) => {
-          console.error('Error', err);
+          if (this.debug) {
+            console.error('Error', err);
+          }
+
           this.message = 'Error!';
         },
       });

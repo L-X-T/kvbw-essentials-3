@@ -16,6 +16,7 @@ import { AsyncCityValidatorDirective } from '../shared/validation/async-city-val
 import { RoundTripValidatorDirective } from '../shared/validation/round-trip-validator.directive';
 import { FlightEditComponent } from '../flight-edit/flight-edit.component';
 import { CITY_PATTERN } from '../../shared/global';
+import { RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -30,6 +31,7 @@ import { CITY_PATTERN } from '../../shared/global';
     AsyncCityValidatorDirective,
     RoundTripValidatorDirective,
     FlightEditComponent,
+    RouterLink,
   ],
   selector: 'app-flight-search',
   templateUrl: './flight-search.component.html',

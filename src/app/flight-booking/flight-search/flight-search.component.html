@@ -115,7 +115,12 @@
 
           <app-flight-status-toggle style="margin-right: 10px" [(delayed)]="flight.delayed" />
 
-          <button class="btn btn-default" (click)="flightToEdit = flight">Edit</button>
+          <button
+            class="btn btn-default"
+            [routerLink]="['/flight-booking/flight-edit', flight.id, { showDetails: true }]"
+          >
+            Edit
+          </button>
         </app-flight-card>
       </div>
     }
