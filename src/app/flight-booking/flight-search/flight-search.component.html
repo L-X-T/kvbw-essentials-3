@@ -246,7 +246,7 @@
     </div>
 
     <div class="content">
-      <app-flight-edit [flight]="flightToEdit" />
+      <app-flight-edit [flight]="flightToEdit" (flightChange)="updateFlight($event)" />
     </div>
   </div>
 }

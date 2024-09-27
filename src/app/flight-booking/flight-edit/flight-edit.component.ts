@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Input, OnChanges } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -20,6 +20,7 @@ import { validateRoundTrip } from '../shared/validation/round-trip-validator';
 })
 export class FlightEditComponent implements OnChanges {
   @Input() flight?: Flight | null;
+  @Output() flightChange = new EventEmitter<Flight>();
 
   private readonly destroyRef = inject(DestroyRef);
   private readonly flightService = inject(FlightService);
@@ -82,6 +83,10 @@ export class FlightEditComponent implements OnChanges {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (flight) => {
+          console.log('saved flight:', flight);
+
+          this.flightChange.emit(flight);
+
           this.message = 'Success!';
         },
         error: (err: HttpErrorResponse) => {
