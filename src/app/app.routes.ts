@@ -24,7 +24,6 @@ export const appRoutes: Route[] = [
   {
     path: 'flight-booking',
     children: flightBookingRoutes,
-    // loadChildren: () => import('./flights/flights.routes').then((f) => f.flightBookingRoutes),
   },
 
   /*{

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
+  standalone: true,
   selector: 'app-passenger-search',
   templateUrl: './passenger-search.component.html',
-  styleUrls: ['./passenger-search.component.css']
+  styleUrls: ['./passenger-search.component.css'],
 })
 export class PassengerSearchComponent {
   title = 'Passengers';
