@@ -4,20 +4,36 @@
     <input formControlName="id" class="form-control" />
   </div>
 
+  @if (editForm.controls['id'] && editForm.controls['id'].errors && editForm.controls['id'].touched) {
+    <app-flight-validation-errors [errors]="editForm.controls['id'].errors" fieldLabel="Id" />
+  }
+
   <div class="form-group">
     <label>From:</label>
     <input formControlName="from" class="form-control" />
   </div>
+
+  @if (editForm.controls['from'] && editForm.controls['from'].errors && editForm.controls['from'].touched) {
+    <app-flight-validation-errors [errors]="editForm.controls['from'].errors" fieldLabel="From" />
+  }
 
   <div class="form-group">
     <label>To:</label>
     <input formControlName="to" class="form-control" />
   </div>
 
+  @if (editForm.controls['to'] && editForm.controls['to'].errors && editForm.controls['to'].touched) {
+    <app-flight-validation-errors [errors]="editForm.controls['to'].errors" fieldLabel="To" />
+  }
+
   <div class="form-group">
     <label>Date:</label>
     <input formControlName="date" class="form-control" />
   </div>
+
+  @if (editForm.controls['date'] && editForm.controls['date'].errors && editForm.controls['date'].touched) {
+    <app-flight-validation-errors [errors]="editForm.controls['date'].errors" fieldLabel="Date" />
+  }
 
   <div class="form-group">
     <button (click)="onSave()" class="btn btn-default">Save</button>
